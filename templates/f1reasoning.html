@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+      <header></header>
+      <title>Reasoning</title>
+      <style>
+        @import url(../static/css/style.css);
+        @import url(../static/css/style2.css);
+      </style>
+   </head>
+   <body >
+   
+      <link href="//code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+      
+      <script src="../node_modules/webcola/WebCola/cola.js"></script>
+      <script src="https://d3js.org/d3.v3.js"></script>  
+      <script src="../static/js/constants.js"></script>
+      <div id="maindiv" >
+      <div class="heading"><h3>MSAW ENGINE V0.1</h3><h3>Function 1: Reasoning</h3></div>
+         <div id="svgdiv" style=" width: 1350px; height: 800px; " >
+            
+         </div>
+         <div id="consolediv" >
+
+            <form name="myform" >
+                     <button id="rs" onclick="runReasoning()" class="ui-button ui-widget ui-state-default ui-corner-all " style="border-color: #ccc; border-width: 3px; min-height: 50px; width: 100%;"  type=button >Run Reasoning</button>
+                     
+                     <textarea id="consoletextinput" cols="60"  style="min-height: 750px; ">
+                     </textarea> 
+                     <br>
+                    <!--  <div class="blue "><p>Cost: </p><input type="text" id="cost" placeholder=""></div>
+                     <div class="blue "><p>Time: </p><input type="text" id="time" placeholder=""></div>
+                     <div class=" blue "><p>Quality Rate: </p><input type="text" id="qrate" placeholder=""></div>
+                     <div class="blue " style="height: 45px"><p>Evaluation Measure: </p><input type="text" id="emeasure" placeholder=""></div> -->
+            </form>
+         </div>
+      </div>
+  		<script
+      src="../static/js/f1reasoning.js" >
+ 		</script>
+      <div class="modal"><!-- Place at bottom of page --></div>
+
+   </body>
+</html>
+
