@@ -7,7 +7,8 @@
       <title>Sensitivity Analysis</title>
       <style>
          @import url(../static/css/style.css);
-         .node {
+         @import url(../static/css/style2.css);
+         /*.node {
          stroke: #fff;
          stroke-width: 1.5px;
          }
@@ -108,17 +109,14 @@
                          no-repeat;
          }
 
-         /* When the body has the loading class, we turn
-            the scrollbar off with overflow:hidden */
          body.loading {
              overflow: hidden;   
          }
 
-         /* Anytime the body has the loading class, our
-            modal element will be visible */
+        
          body.loading .modal {
              display: block;
-         }
+         }*/
 
 
       </style>
@@ -152,9 +150,8 @@
          </div>
          <div id="svgdiv">
             
-               <script
-                  src="../static/js/f4sens.js" >
-               </script>
+               <script src="../static/js/common.js" > </script>
+               <script src="../static/js/f4sens.js" > </script>
          </div>
       </div>
       <div class="modal"><!-- Place at bottom of page --></div>

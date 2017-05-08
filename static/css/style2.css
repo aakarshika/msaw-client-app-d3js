@@ -1,5 +1,5 @@
 
-         .node {
+         .nodeBorder {
             fill:#fff;
             opacity: 90%;
          }
@@ -38,7 +38,7 @@
          font-size: 18px;
          text-anchor: middle;
          }
-         .imgC { 
+         .imgNodeBack { 
             stroke: #7a4e4e;
             stroke-width: 3px;
             border: 2px solid #fff;
@@ -75,6 +75,15 @@
           border: 1.5px solid #9966ff;
            border-radius: 5px;
          }
+
+         div.white{
+            background-color: #ffd;
+            height: 25px;
+            padding: 5px;
+            stroke: #fff;
+            stroke-width: 1.5px;
+           border-radius: 5px;
+         }
          textarea{
 
             font-family: Verdana;
@@ -102,7 +111,7 @@
             display:inline;
             fill: black ;
             font-family: Verdana;
-            font-size: 12px;
+            font-size: 15px;
          }
 
          .modal {
