@@ -90,21 +90,21 @@ function rendernext(){
         .call(cola.drag);
     //   label.exit().remove();
 
-    img = img.data(attributesData)
+    imgType = imgType.data(attributesData)
         .enter()
         .append("image")
         .attr("class", "imgC")
         .attr("xlink:href", function(d) {
-            var url = urlList[1];
+            var url = urlList[7];
             var simg = this;
-            var img = new Image();
-            img.onload = function() {
+            var imgt = new Image();
+            imgt.onload = function() {
                // d.width = 15;
                // d.height = 15;
                 simg.setAttribute("width", d.height/2);
                 simg.setAttribute("height", d.height/2);
             }
-            return img.src = url;
+            return imgt.src = url;
         });
 
 
@@ -170,7 +170,7 @@ function tick2() {
             var h = this.getBBox().height;
             return d.y + h / 4;
         });
-    img
+    imgType
         .attr("x", function(d) {
             return d.x + d.width/2 -d.height/2 -3;
         })
@@ -269,19 +269,19 @@ function update() {
             else
                 return;
          });
-    img.data(attributesData)
+    imgType.data(attributesData)
         .transition()
         .attr("xlink:href", function(d) {
             var url = urlList[d.type];
             var simg = this;
-            var img = new Image();
-            img.onload = function() {
+            var imgt = new Image();
+            imgt.onload = function() {
                // d.width = 10;
                // d.height = 10;
                 simg.setAttribute("width", d.height/2);
                 simg.setAttribute("height", d.height/2);
             }
-            return img.src = url;
+            return imgt.src = url;
         });
 }
 

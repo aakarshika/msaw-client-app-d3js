@@ -15,21 +15,35 @@
 </head>
 
 <body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+    <script src="../node_modules/webcola/WebCola/cola.js"></script>
+    <script src="https://d3js.org/d3.v3.js"></script>
+    <!-- custom js -->
+    <script src="../static/js/constants.js"></script>
+    
+
     <div id="maindiv">
         <div class="heading">
-            <h4 class="center-align">MSAW ENGINE V0.1</h4>
-            <h5 class="center-align">Function 1: Reasoning</h5>
+            <h3 class="center-align">MSAW ENGINE V0.1</h3>
+            <h4 class="center-align">Function 1: Reasoning</h4>
         </div>
         <div class="container-fluid box-wrapper">
             <div class="row">
-                <div class="col l8">
+                <div class="col l9">
                     <div id="svgdiv" class="center-align">
+	                    <script type="text/javascript">
+					   		var svgwidth = $("#svgdiv").width();
+					    </script>
+					    <script src="../static/js/common.js"></script>
+					    <script src="../static/js/f1reasoning.js"></script>
                     </div>
                 </div>
-                <div class="col l4">
+                <div class="col l3">
                     <div id="consolediv" class="center-align">
                         <form name="myform">
-                            <a id="rs" class="waves-effect waves-light btn run-reason-btn" onclick="runReasoning()">Run Reasoning <i class="material-icons right">send</i></a>
+                        	<span class="button" onclick="runReasoning()"><p>Run Reasoning</p></span>
+                            <!-- <a id="rs" class="waves-effect waves-light btn run-reason-btn" onclick="runReasoning()">Run Reasoning <i class="material-icons right">send</i></a> -->
                             <textarea id="consoletextinput"></textarea>
                             <br>
                             <!--  <div class="blue "><p>Cost: </p><input type="text" id="cost" placeholder=""></div>
@@ -43,18 +57,8 @@
         </div>
     </div>
     <div class="modal">
-        <!-- Place at bottom of page -->
     </div>
     <!-- js libraries -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    <script src="../node_modules/webcola/WebCola/cola.js"></script>
-    <script src="https://d3js.org/d3.v3.js"></script>
-    <!-- custom js -->
-    <script src="../static/js/constants.js"></script>
-    <script type="text/javascript">
-    var svgwidth = $("#svgdiv").width();
-    </script>
-    <script src="../static/js/f1reasoning.js"></script>
+    
 </body>
 </html>

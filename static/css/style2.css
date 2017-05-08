@@ -94,13 +94,20 @@ input {
 svg {}
 
 h3 {
-    margin: 0px;
+    padding: 10px;
     text-align: center;
     color: #000060;
     font-weight: bold;
     font-family: "Times New Roman", Times, serif;
-    font-size: 20px;
-    text-anchor: middle;
+    font-size: 30px;
+}
+h4 {
+    padding: 10px;
+    text-align: center;
+    color: #000060;
+    font-weight: bold;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 24px;
 }
 
 p {
@@ -164,6 +171,7 @@ p {
 }
 
 #maindiv {
+
     width: 100%;
 }
 
@@ -216,10 +224,101 @@ body.loading .modal {
 }
 
 
-/*div.heading {
+div.heading {
+margin: 20px;
     background-image: url('https://superdevresources.com/wp-content/uploads/2014/11/metal-texture.jpg');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-origin: content-box;
-    padding: 0px;
-}*/
+   
+}
+
+
+
+
+
+
+span { width:100%;  }
+p,
+.button {
+	cursor: pointer;
+
+    color: #000070;
+
+    font-weight: bold;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 30px;
+}
+span:hover>p {
+    color: #005;
+    text-shadow: -1px -0.5px 0.5px #000;
+}
+.button {
+    display: block;
+    float: left;
+    font-size: 28px;
+    background-color: #434343;
+    background-image: -webkit-linear-gradient(100% 100% 90deg, #515151, #7A7A7A);
+    background-image: -moz-linear-gradient(100% 100% 90deg, #515151, #7A7A7A);
+    background-image: -o-linear-gradient(100% 100% 90deg, #515151, #7A7A7A);
+    background-image: -ms-linear-gradient(100% 100% 90deg, #515151, #7A7A7A);
+    background-image: linear-gradient(100% 100% 90deg, #515151, #7A7A7A);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7A7A7A), to(#515151));
+    border: none;
+    border-top: 3px solid #c2c2c2;
+    /*border-radius*/
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    /*box-shadow*/
+    box-shadow: inset 0 1px 2px rgba(2,2,2,0.2), 0 1px 0 #2D2D2D, 0 2px 0 #2D2D2D;
+box-shadow: 0 2px 3px 0 rgba(0,0,0,0.2),0 1px 4px 0 rgba(0,0,0,0.3),0 3px 1px -1px rgba(0,0,0,0.2);
+
+    padding: 10px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+    margin-right: 10px;
+    text-decoration: none;
+    background-image: -webkit-radial-gradient(  50%   0%,  8% 50%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),                        -webkit-radial-gradient(  50% 100%, 12% 50%, hsla(0,0%,100%,.6) 0%, hsla(0,0%,100%,0) 100%),                        -webkit-radial-gradient(   0%  50%, 50%  7%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),                        -webkit-radial-gradient( 100%  50%, 50%  5%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),                                                -webkit-repeating-radial-gradient(    50% 50%, 100% 100%, hsla(0,0%,  0%,0) 0%, hsla(0,0%,  0%,0)   3%, hsla(0,0%,  0%,.1) 3.5%),                        -webkit-repeating-radial-gradient(    50% 50%, 100% 100%, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0)   6%, hsla(0,0%,100%,.1) 7.5%),                        -webkit-repeating-radial-gradient(    50% 50%, 100% 100%, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.2) 2.2%),                                                -webkit-radial-gradient(    50% 50%, 200% 50%, hsla(0,0%,90%,1) 5%, hsla(0,0%,85%,1) 30%, hsla(0,0%,60%,1) 100%);
+}
+.button:before,
+.button:after {
+    content: "";
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    /*border-radius*/
+    -webkit-border-radius: inherit;
+    -moz-border-radius: inherit;
+    border-radius: inherit;
+    /* fake conical gradients */
+    background-image: -webkit-radial-gradient(  50%   0%, 10% 50%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%),                        -webkit-radial-gradient(  50% 100%, 10% 50%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%),                        -webkit-radial-gradient(   0%  50%, 50% 10%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%),                        -webkit-radial-gradient( 100%  50%, 50% 06%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%);
+}
+.button:before {
+    /*transform*/
+    -webkit-transform: rotate( 65deg);
+    -moz-transform: rotate( 65deg);
+    -ms-transform: rotate( 65deg);
+    -o-transform: rotate( 65deg);
+    transform: rotate( 65deg);
+}
+.button:after {
+    /*transform*/
+    -webkit-transform: rotate(-65deg);
+    -moz-transform: rotate(-65deg);
+    -ms-transform: rotate(-65deg);
+    -o-transform: rotate(-65deg);
+    transform: rotate(-65deg);
+}
+.button:active {
+    border-top: 0px solid #dde1e7;
+    /*box-shadow*/
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.0), 0 1px 0 #2D2D2D;
+    /*transform*/
+    -webkit-transform: translateY(4px);
+    -moz-transform: translateY(4px);
+    -ms-transform: translateY(4px);
+    -o-transform: translateY(4px);
+    transform: translateY(4px);
+}

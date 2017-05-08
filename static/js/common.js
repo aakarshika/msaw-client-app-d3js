@@ -1,9 +1,10 @@
 var color = ["#98df8a", "#7ec7e8", "#ffbb78","#7ec7e8","#ffbb78", "#7ec7e8","#ffbb78","#ffff99","#ffff99"];
-var urlList=["graphdata/p.png","graphdata/o.png"];
+var urlList=["../static/img/c0.gif","../static/img/c1.gif","../static/img/c2.gif","../static/img/c3.gif","../static/img/c4.gif","../static/img/c5.gif","../static/img/c6.gif","../static/img/c2.gif"];
 var data={};
 var initialinput="";
-var width = 1350,
-    height = 800;
+
+var width = svgwidth,
+    height = 780;
 
 var cola = cola.d3adaptor(d3)
     .linkDistance(50)
@@ -21,7 +22,7 @@ svg.append('rect')
     .attr('class', 'background')
     .attr('width', "100%")
     .attr('height', "100%")
-    .style('border',"nones")
+    .style('border',"none")
     .call(d3.behavior.zoom().on("zoom", redraw))
     //.call(cola.drag)
     ;
@@ -59,22 +60,22 @@ var constraintsData =  [
      [
        {"node":0, "offset":0},//sg
        {"node":1, "offset":50},//sga
-       {"node":2, "offset":300},//htrcon
-       {"node":3, "offset":70},//htrcona
-       {"node":4, "offset":0},//htr
-       {"node":5, "offset":-270},//hta
-       {"node":6, "offset":300},//rmcon
-       {"node":7, "offset":70},//rmcona
-       {"node":8, "offset":0},//rm
-       {"node":9, "offset":-270},//rma
-       {"node":10, "offset":300},//fmcon
-       {"node":11, "offset":70},//fmcona
-       {"node":12, "offset":0},//fm
-       {"node":13, "offset":0},//fma
-       {"node":14, "offset":-280},//est
-       {"node":15, "offset":-240},//esta	
-       {"node":16, "offset":-140},//total
-       {"node":17, "offset":-100}//totala
+       {"node":2, "offset":350},//htrcon
+       {"node":3, "offset":100},//htrcona
+       {"node":4, "offset":50},//htr
+       {"node":5, "offset":-220},//hta
+       {"node":6, "offset":350},//rmcon
+       {"node":7, "offset":100},//rmcona
+       {"node":8, "offset":50},//rm
+       {"node":9, "offset":-220},//rma
+       {"node":10, "offset":350},//fmcon
+       {"node":11, "offset":100},//fmcona
+       {"node":12, "offset":50},//fm
+       {"node":13, "offset":50},//fma
+       {"node":14, "offset":-240},//est
+       {"node":15, "offset":-200},//esta	
+       {"node":16, "offset":-100},//total
+       {"node":17, "offset":-60}//totala
      ]},
     {"type":"alignment",
      "axis":"x",
@@ -150,7 +151,7 @@ d3.json(BACKEND_URL+"simulation", function(err, j) {
     rendernext();
 });
 
-vis.attr("transform","translate(214.453125,-283) scale(1)");
+vis.attr("transform","translate(300,-200) scale(1)");
 // d3.json("graphdata/process-model.json", function(err, j) {
 //     var allNodesData = j.nodes;
 //     initialinput=JSON.stringify(allNodesData[0]);
@@ -187,14 +188,14 @@ function nodify(){
         x.value="";
         x.width=hWidth;
         x.height=hHeight;
-        x.color=color[i];
+        x.color="#00f";
         var i2=i*2;
        console.info(i2);
         var offsetxh = 2.7*constraintsData[1]["offsets"][i2].offset;
         var offsetyh = constraintsData[0]["offsets"][i2].offset;
         if(i2==2||i2==6||i2==10)
         {
-            offsetyh = v.output.properties.length * aHeight +100;
+            offsetyh = v.output.properties.length * aHeight +125;
         }
         var con = {};
         con['node'] = TI;
@@ -319,15 +320,15 @@ function render(){
         })
         .attr("xlink:href", function(d) {
            // var url = "http://www.timepasssms.com/images/big/Abstract/big_1258050901.jpg";
-            var url = "../static/img/metalblueback.jpeg";
+            var url = "../static/img/blueback.jpg";
             var simg = this;
-            var img = new Image();
-            img.onload = function() {
+            var imgn = new Image();
+            imgn.onload = function() {
                 //simg.setAttribute("width", d.width);
                 //simg.setAttribute("rx", "5px");
                 simg.setAttribute("preserveAspectRatio", "none");
             }
-            return img.src = url;
+            return imgn.src = url;
         });
 
 
