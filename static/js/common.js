@@ -1,6 +1,8 @@
 var color = ["#98df8a", "#7ec7e8", "#ffbb78","#7ec7e8","#ffbb78", "#7ec7e8","#ffbb78","#ffff99","#ffff99"];
-var urlList=["../static/img/c0.gif","../static/img/c1.gif","../static/img/c2.gif","../static/img/c3.gif","../static/img/c4.gif","../static/img/c5.gif","../static/img/c6.gif","../static/img/c2.gif"];
+var urlList=["../static/img/c0.png","../static/img/c1.png","../static/img/c2.png","../static/img/c3.png","../static/img/c4.png","../static/img/c5.png","../static/img/c6.png","../static/img/c7.png"];
 var data={};
+data["targetVariables"]=[];
+
 var initialinput="";
 
 var width = svgwidth,
@@ -145,7 +147,6 @@ d3.json(BACKEND_URL+"simulation", function(err, j) {
     allNodesData2 = j.processes;
     ////console.info(JSON.stringify(j));
     initialinput=JSON.stringify(j);
-    data["targetVariables"]=[];
     nodify();
     render();
     rendernext();

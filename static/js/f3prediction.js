@@ -1,4 +1,5 @@
-function rendernext(){
+data["inputs"]={};
+function rendernext(argument) {
     attnode = attnode.data(attributesData)
         .enter().append("rect")
         .attr("width", function(d) {
@@ -13,23 +14,33 @@ function rendernext(){
             return d.color;
         })
         .on("click",function(d){
-            //if(d.group==procNamesData[4].name){
-                data["outputTargetAttribute"]={"tag":d.group,"attribute":d.name};
-                d3.selectAll(".attnode").transition()
-                 .style("fill", function(d, i) {
-                    return d.color;
-                });
+                var index=getIndex(data["targetVariables"],(d.group+"."+d.name));
+                if(index==-1)
+                {
+                    console.info("adding "+d.group+"."+d.name);
+                    data["targetVariables"].push({name:d.group+"."+d.name, lessthan:0,morethan:0});
+                }
+                else{
+                    removeElement(data["targetVariables"],index);
+                    console.info("after removing"+JSON.stringify(data["targetVariables"]));
+                }
+                $('#consoletextinputP').val(JSON.stringify(data["targetVariables"]));
+
                 d3.select(this).transition()
-               .style("fill", function(d, i) {
-                    return "#ffdd99";
+                .style("fill", function(d, i) {
+                    var index=getIndex(data["targetVariables"],d.group+"."+d.name);
+                    if(index==-1)
+                    {
+                        return "#fff";
+                    }
+                    else{            
+                        return "#ffe6b3";}
                 });
             
 
         })
-    //  .call(cola.drag)
-    ;
+        .call(cola.drag);
 
-    //   node.exit().remove();
     label = label.data(attributesData, function(d) {
              return d.group+d.name;
         })
@@ -38,8 +49,9 @@ function rendernext(){
         .attr("class", "label")
         .text(function(d) {
             if((d.group)==(procNamesData[0].name))
-                return d.name + ": " + d.value.substring(0,d.value.length-12);
-            return d.name + ": " + d.value.substring(0,d.value.length-12)   ;
+                //return d.name + ": " + d.value.substring(0,d.value.length-12);
+                return d.name + ": " + d.value;
+            return d.name + ": "    ;
         })
         .call(cola.drag);
 
@@ -55,141 +67,96 @@ function rendernext(){
         .call(cola.drag);
 }
 
-function tick2() {
-
-    console.info("tick");
-
-    node
-        .attr("x", function(d) {
-            return d.x - d.width / 2 + pad;
-        })
-        .attr("y", function(d) {
-            return d.y - d.height / 2 + pad;
-        });
-    attnode
-        .attr("x", function(d) {
-            return d.x - d.width / 2 + pad;
-        })
-        .attr("y", function(d) {
-            return d.y - d.height / 2 + pad;
-        });
-    group
-        .attr("x", function(d) {
-            return d.bounds.x;
-        })
-        .attr("y", function(d) {
-            return d.bounds.y;
-        })
-        .attr("width", function(d) {
-            return d.bounds.width() + gpad;
-        })
-        .attr("height", function(d) {
-            return d.bounds.height() + gpad;
-        });
-    link
-        .attr("x1", function(d) {
-            return d.source.x;
-        })
-        .attr("y1", function(d) {
-            return d.source.y;
-        })
-        .attr("x2", function(d) {
-            return d.target.x;
-        })
-        .attr("y2", function(d) {
-            return d.target.y;
-        });
-    label
-        .attr("x", function(d) {
-            return d.x - d.width/2 +4;
-        })
-        .attr("y", function(d) { //return d.y;
-            var h = this.getBBox().height;
-            return d.y + h / 4;
-        });
-    labelH
-        .attr("x", function(d) {
-            return d.x;
-        })
-        .attr("y", function(d) { //return d.y;
-            var h = this.getBBox().height;
-            return d.y + h / 4;
-        });
-    // img
-    //     .attr("x", function(d) {
-    //         return d.x + d.width/2 -d.height/2 -3;
-    //     })
-    //     .attr("y", function(d) {
-    //         var h = this.getBBox().height;
-    //         return d.y -h/2;
-    //     });
+function getIndex(jsonArray,groupname)
+{
+    var i=-1,c=0;
+    jsonArray.forEach(function(v){
+        
+        if(v.name==groupname)
+        {
+           // console.info("contains "+v.name+"  "+name);
+            i=c;  
+        }
+        c++;
+    });
+    return i;
+}
+function removeElement(jsonArray, index)
+{
+    var d=[]; var i=0;
+    data["targetVariables"].forEach(function(v){
+        //console.info(JSON.stringify(v));
+        if(i!=index)
+            d.push(v);
+        i++;
+    });
+    data["targetVariables"]=d;
 }
 
-data["inputs"]={};
-
-data["inputs"]["optimise"]="max";
-$(document).on("change","input[type=radio]",function(){
-    var optimise=$('[name="optimise"]:checked').val();
-    data["inputs"]["optimise"]="min";
-    console.info(optimise);
+$('#consoletextinputP').bind('input propertychange', function() {
+      //console.info(this.value);
+      data["targetVariables"]=JSON.parse(this.value);
+     // updateOutputAttribFromConsole();
+      //console.info(JSON.stringify(data));
+      
 });
 
-$body = $("body");
 
 
 function runPrediction()
 {
-    data["inputs"]=[];
-    var lessthan=$("#lessthan").val();
-    var morethan=$("#morethan").val();
-    data.inputs.lessthan=lessthan;
-    data.inputs.morethan=morethan;
 
+    var itemFlow=parseInt($("#itemFlow").val());
     if(data["targetVariables"]==null)
     {
         alert("Select an output attribute for prediction and alarm analysis.");
     }
     else{
+        if(itemFlow==0)
+            alert("Number of item flows cannot be empty. Enter an integer.");
+        else{
+            data["inputs"]["itemFlow"]=itemFlow;
+
             var passcode=prompt("Please enter a unique code for this run.");
             if(passcode!=null)
             {
                 data["passcode"]=passcode;
-                //post data
-                $body.addClass("loading");
-
-
 
                 var postingData=JSON.parse(initialinput);
                 postingData["targetVariables"]=data["targetVariables"];
                 postingData["inputs"]=data["inputs"];
                 postingData["passcode"]=data["passcode"];
-
-
+                
                 console.info("posting data: "+JSON.stringify(postingData));
+                //$body.addClass("loading");
 
                 d3.xhr(BACKEND_URL+"prediction")
                     .header("Content-Type", "application/json")
                     .post(
                         JSON.stringify(postingData),
                         function(err, rawData){
-                            console.info(rawData.response);
-                            // j2= JSON.parse(rawData.response);
-                            // allNodesData=j2.processes;
-                            // updateAttrib(allNodesData);
-            $body.removeClass("loading"); 
 
-                            // update();
-                        }
+                            //$body.removeClass("loading"); 
+                            console.info(rawData.response);
+
+                            var j2= JSON.parse(rawData.response);
+                            if(j2.success==1)
+                                alert("Your analysis is running. Come back after a while to retrieve your data.");
+                            else if (j2.success==2)
+                            {
+                                alert("This passcode is taken. Please use a different passcode.");
+                                runPrediction();
+                            }
+                            }
                     );
 
-                alert("Your analysis is running. Come back after a while to retrieve your data.");
-            
+                //$body.removeClass("loading"); 
+            }
         }
     }
-    console.info(JSON.stringify(data));
+    //console.info(JSON.stringify(data));
 
 }
-
 var processSets;
 
 function getPrevPrediction(){
@@ -236,17 +203,20 @@ function getChartValues(j){
     renderChart(caseValues.values);
 }
 function renderChart(caseValues)
+//function renderChart()
 {
 
-    
+    //caseValues=[2.5,4.34,7.654,5.234,5.23,4.23,3.23,3.1,4.12,7.234,5.23,4.123,3.12];
     var no=caseValues.length;
-
+    var step=1;
+    step=(no<10 ? 1 : no/10);
+    console.info(step+" step");
     console.info("renderchart");
     var dataChart = {
         "start": 1,
         "end": no,
-        "step": (no<12 ? 1 : no/10),
-        "names": ["Item Flows"],
+        "step": step,
+        "names": ["Item Flow Number"],
         "values": [caseValues]
     };
 
@@ -259,10 +229,10 @@ function renderChart(caseValues)
 
 
     
-    var x = document.getElementById('chartButton');
-    x.style.display = 'block';
-    var y = document.getElementById('downloadButton');
-    y.style.display = 'block';
+    // var x = document.getElementById('chartButton');
+    // x.style.display = 'block';
+    // var y = document.getElementById('downloadButton');
+    // y.style.display = 'block';
 }
 function setDownloadLink(pathToCSV)
 {
@@ -270,7 +240,7 @@ function setDownloadLink(pathToCSV)
 }
 function showChart()
 {
-    
+        renderChart();
      $('#dialogChart').dialog({
             modal: true,
             width: 400,

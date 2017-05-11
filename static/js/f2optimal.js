@@ -1,3 +1,4 @@
+data["inputs"]={};
 function rendernext(){
     attnode = attnode.data(attributesData)
         .enter().append("rect")
@@ -13,12 +14,13 @@ function rendernext(){
             return d.color;
         })
         .on("click",function(d){
-            if(d.group!=procNamesData[0].name){
+                var opt=$('[name="optimise"]:checked').val();
+                console.info("checked: "+opt);
                 if(data["targetVariables"].length==0)
-                    data["targetVariables"].push({"name":d.group+"."+d.name});
+                    data["targetVariables"].push({"optimise":opt,"name":d.group+"."+d.name});
                 else{
                     data["targetVariables"].shift();
-                    data["targetVariables"].push({"name":d.group+"."+d.name});
+                    data["targetVariables"].push({"optimise":opt,"name":d.group+"."+d.name});
                     
                 }
                // console.info(JSON.stringify(data["targetVariables"]));
@@ -42,7 +44,7 @@ function rendernext(){
                 .style("fill", function(d, i) {
                     return "#ffdd99";
                 });
-            }
+            
 
         })
     //  .call(cola.drag)
@@ -73,28 +75,29 @@ function rendernext(){
 }
 
 
-data["inputs"]={};
 
-data["inputs"]["optimise"]="max";
-$(document).on("change","input[type=radio]",function(){
-    var optimise=$('[name="optimise"]:checked').val();
-    data["inputs"]["optimise"]="min";
-    console.info(optimise);
-});
+// data["inputs"]["optimise"]="max";
+// $(document).on("change","input[type=radio]",function(){
+//     var optimise=$('[name="optimise"]:checked').val();
+//     data["inputs"]["optimise"]="min";
+//     console.info(optimise);
+// });
 
-$body = $("body");
+//$body = $("body");
 
 function runOptimalCVF()
 {
 
-    var displayCases=$("#displayCases").val();
-    var totalCases=$("#totalCases").val();
+    var displayCases=0;
+    displayCases=parseInt($("#displayCases").val());
+    var totalCases=0;
+    totalCases=parseInt($("#totalCases").val());
     if(data["targetVariables"]==null)
     {
         alert("Select an output attribute for optimal control value analysis.");
     }
     else{
-        if(displayCases=="" || totalCases=="")
+        if(displayCases==0 || totalCases==0)
             alert("Number of cases cannot be empty. Enter an integer.");
         else{
             data["inputs"]["totalCases"]=totalCases;
@@ -109,36 +112,40 @@ function runOptimalCVF()
                 data["passcode"]=passcode;
                 //post data
 
-$body.addClass("loading");
-
+                
                 var postingData=JSON.parse(initialinput);
                 postingData["targetVariables"]=data["targetVariables"];
                 postingData["inputs"]=data["inputs"];
                 postingData["passcode"]=data["passcode"];
-
                 
                 console.info("posting data: "+JSON.stringify(postingData));
+                //$body.addClass("loading");
 
                 d3.xhr(BACKEND_URL+"optimal")
                     .header("Content-Type", "application/json")
                     .post(
                         JSON.stringify(postingData),
                         function(err, rawData){
-                            console.info(rawData.response);
-                            // j2= JSON.parse(rawData.response);
-                            // allNodesData=j2.processes;
-                            // updateAttrib(allNodesData);
-            $body.removeClass("loading"); 
 
-                            // update();
+                            //$body.removeClass("loading"); 
+                            console.info(rawData.response);
+
+                            var j2= JSON.parse(rawData.response);
+                            if(j2.success==1)
+                                alert("Your analysis is running. Come back after a while to retrieve your data.");
+                            else if (j2.success==2)
+                            {
+                                alert("This passcode is taken. Please use a different passcode.");
+                                runOptimalCVF();
+                            }
                         }
                     );
 
-                alert("Your analysis is running. Come back after a while to retrieve your data.");
+                //$body.removeClass("loading"); 
             }
         }
     }
-    console.info(JSON.stringify(data));
+    //console.info(JSON.stringify(data));
 
 }
 var processSets;
@@ -162,6 +169,7 @@ function getPrevAnalysis(){
     // });
     d3.json(BACKEND_URL+"alloptimal/"+pass,function(err, j2) {          
             processSets=j2.processSets;
+            //console.info(JSON.stringify(processSets[0]));
             getChartValues(j2);
             //setDownloadLink(j2.pathToCSV);
         
@@ -172,33 +180,47 @@ function getPrevAnalysis(){
 }
 function getChartValues(j){
 	targetVariable=j.processSets[0].targetVariables[0];
+    console.info(JSON.stringify(targetVariable)+" targetVariable");
+
+    var pr=targetVariable.name.split('.')[0];
+
 	var caseValues={"values":[]};
 	j.processSets.forEach(function(p){
-		p.processes.forEach(function(pro){
-			pro.output.properties.forEach(function(att){
-				if(targetVariable==att.name){
-					caseValues.values.push(att.value);
-				}
-			});
+        console.info(p.ID);
+    	p.processes.forEach(function(pro){
+			console.info(pro.ID);
+            if(pro.ID==pr)
+                pro.output.properties.forEach(function(att){
+				    //console.info();
+                    console.info(JSON.stringify(att));
+                       
+                    if(targetVariable.name==att.name){
+                       caseValues.values.push(att.value);
+				    }
+			     });
 		});
+    
 	});
 	console.info('chart: '+JSON.stringify(caseValues));
 
-    renderChart(caseValues.values);
+    renderChart(caseValues);
 }
 function renderChart(caseValues)
 {
 
-    
-    var no=caseValues.length;
-
+    console.info(caseValues);
+    //caseValues=[2.5,4.34,7.654,5.234,5.23,4.23,3.23,3.1,4.12,7.234,5.23,4.123,3.12];
+    var no=caseValues.values.length;
+    var step=1;
+    step=(no<10 ? 1 : no/10);
+    console.info(step+" step");
     console.info("renderchart");
     var dataChart = {
         "start": 1,
         "end": no,
-        "step": (no<12 ? 1 : no/10),
-        "names": ["Case Values"],
-        "values": [[23,46,7,8,4,5,7,5,4,3,3]]
+        "step": step,
+        "names": ["Case Number"],
+        "values": [caseValues.values]
     };
 
 
@@ -210,10 +232,10 @@ function renderChart(caseValues)
 
 
     
-    var x = document.getElementById('chartButton');
-    x.style.display = 'block';
-    var y = document.getElementById('downloadButton');
-    y.style.display = 'block';
+    // var x = document.getElementById('chartButton');
+    // x.style.display = 'block';
+    // var y = document.getElementById('downloadButton');
+    // y.style.display = 'block';
 }
 function setDownloadLink(pathToCSV)
 {
@@ -221,7 +243,7 @@ function setDownloadLink(pathToCSV)
 }
 function showChart()
 {
-    
+        renderChart();
      $('#dialogChart').dialog({
             modal: true,
             width: 400,

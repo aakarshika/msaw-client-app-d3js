@@ -68,24 +68,6 @@ function rendernext(argument) {
             return d.name;
         })
         .call(cola.drag);
-    //   label.exit().remove();
-
-    // img = img.data(attributes)
-    //     .enter()
-    //     .append("image")
-    //     .attr("class", "imgC")
-    //     .attr("xlink:href", function(d) {
-    //         var url = "graphdata/o.png";
-    //         var simg = this;
-    //         var img = new Image();
-    //         img.onload = function() {
-    //             simg.setAttribute("width", d.height/2);
-    //             simg.setAttribute("height", d.height/2);
-    //         }
-    //         return img.src = url;
-    //     });
-
-
 }
 
 function getIndex(jsonArray,groupname)
@@ -196,31 +178,16 @@ function update() {
 
 function updateAttrib(allNodesData)
 {
-    // var k=0;
-    // for(i=0;i<7;i++)
-    // {
-    //     allNodesData[i].attributes.forEach(function(n){
-    //         n.height=18;
-    //         n.width=100;
-    //         attributes[k++]=n;
-    //     });
-    // }
     var k=0;
     allNodesData.forEach(function(v){
-        // v.output.properties.forEach(function(v){
-        //     attributesData[k++]=n;
-        // });
-
         v.output.properties.forEach(function(a){
 
             var aname=a.name.split(".")[1];
             a.name=aname;
-            // console.info(a);
             a.group=v.ID;
             a.width=aWidth;
             a.height=aHeight;
             a.color="#fff";
-//            a.id=TI;
             attributesData[k++]=(a);
         });
         

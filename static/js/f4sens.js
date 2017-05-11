@@ -1,3 +1,4 @@
+data["freeVariables"]=[];
 function rendernext(){
     attnode = attnode.data(attributesData)
         .enter().append("rect")
@@ -264,15 +265,12 @@ function update() {
         .transition()
         .duration(750)
         .styleTween("fill", function(d) {
-            if(d.group!=procNamesData[0].name)
                  return d3.interpolate("#ffffff", "#ffffcc");
-            else
-                return;
          });
     imgType.data(attributesData)
-        .transition()
+        //.transition()
         .attr("xlink:href", function(d) {
-            var url = urlList[d.type];
+            console.info(d.type);
             var simg = this;
             var imgt = new Image();
             imgt.onload = function() {
@@ -281,7 +279,7 @@ function update() {
                 simg.setAttribute("width", d.height/2);
                 simg.setAttribute("height", d.height/2);
             }
-            return imgt.src = url;
+            return imgt.src = urlList[d.type];
         });
 }
 

@@ -160,7 +160,7 @@ blockquote:after {
 #svgdiv {
     border: 1px solid #ccc;
     width: 100%;
-    min-height: 780px;
+    min-height: 770px;
 }
 
 .run-reason-btn {
@@ -175,5 +175,8 @@ blockquote:after {
 }
 
 #consoletextinput {
-    min-height: 740px;
+    min-height: 600px;
+}
+#consoletextinputP {
+    min-height: 100px;
 }
